@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name='dding',
-    version='0.1',
+    version='0.0.1',
     keywords='dding',
     description='钉钉自定义机器人.',
     # version = dding.__version__,

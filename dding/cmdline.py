@@ -11,7 +11,7 @@ import six
 import six.moves.urllib as urllib
 import traceback
 
-home_path = os.path.expandvars('$HOME')
+home_path = os.path.expanduser('~')
 cache_path = os.path.join(home_path, '.dding')
 file_name = cache_path + '/config.json'
 

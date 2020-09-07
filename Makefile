@@ -1,7 +1,9 @@
 install:
 	python setup.py install --record files.txt
 sdist:
-	cd dding && python setup.py sdist
+	python setup.py sdist bdist_wheel
+publish:
+	twine upload dist/*
 clean:
 	cat files.txt | xargs rm -rf
 	rm -fr ./dding.egg-info

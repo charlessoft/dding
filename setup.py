@@ -9,7 +9,9 @@ setuptools.setup(
     keywords='dding',
     description='钉钉自定义机器人.',
     # version = dding.__version__,
-    install_requires=[],
+    install_requires=[
+        six,
+    ],
     entry_points={
         'console_scripts': [
             'dding = dding.cmdline:main',

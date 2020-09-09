@@ -10,7 +10,7 @@ setuptools.setup(
     description='钉钉自定义机器人.',
     # version = dding.__version__,
     install_requires=[
-        six,
+        'six',
     ],
     entry_points={
         'console_scripts': [

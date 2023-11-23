@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+import codecs
 import os
 
 import setuptools
 
 setuptools.setup(
     name='dding',
-    version='0.0.4',
+    version='0.0.5',
     keywords='dding',
     description='钉钉自定义机器人.',
     # version = dding.__version__,
@@ -17,11 +18,11 @@ setuptools.setup(
             'dding = dding.cmdline:main',
         ],
     },
-    long_description=open(
+    long_description=codecs.open(
         os.path.join(
             os.path.dirname(__file__),
             'README.rst'
-        )
+        ), 'r', 'utf-8'
     ).read(),
     author='charlessoft',
     author_email='charlessoft@qq.com',

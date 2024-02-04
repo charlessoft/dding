@@ -7,9 +7,10 @@ from dding.notify import notify_dding
 
 def main():
     if len(sys.argv) == 2:
-        notify_dding(text=sys.argv[1])
+        print(sys.argv[1])
+        notify_dding(group='default', content=sys.argv[1], title='',msgtype='text')
     elif len(sys.argv) == 3:
-        notify_dding(group=sys.argv[1], text=sys.argv[2])
+        notify_dding(group=sys.argv[1], content=sys.argv[2], title='',msgtype='text')
     else:
         parser = argparse.ArgumentParser()
         parser.add_argument('--group', default='default')
@@ -35,8 +36,9 @@ def test1():
     content="### 杭州天气 \n> 1111"
     # content="### 杭州天气 \n 1111"
 
-    notify_dding(group='default', title='hello', content=content, msgtype='markdown')
+    notify_dding(group='default', title='hello',content=sys.argv[1], msgtype='text')
 
 if __name__ == '__main__':
-    # test1()
     main()
+    # test1()
+

@@ -12,3 +12,7 @@ clean:
 
 resetconfig:
 	rm -fr ~/.dding/config.json
+
+upgrade:
+	pip3 install --upgrade dding
+

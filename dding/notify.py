@@ -15,7 +15,7 @@ cache_path = os.path.join(home_path, '.dding')
 file_name = cache_path + '/config.json'
 
 
-def http_post(url, content):
+def http_post(url, msgtype,title,content):
     """
     http posts
     :param url:
@@ -24,7 +24,19 @@ def http_post(url, content):
     """
     try:
         headers = {'Content-Type': 'application/json'}
-        data = {"msgtype": "text", "text": {"content": content}}
+        if msgtype == 'text':
+            data = {"msgtype": msgtype, "text": {"content": content}}
+        else:
+            data={
+                "msgtype": msgtype,
+                "markdown": {
+                    "title":title,
+                    "text": content.replace('\\n', '\n')
+                },
+                "at": {
+                    "isAtAll": False
+                }
+            }
         req = urllib.request.Request(url=url, headers=headers, data=json.dumps(data).encode())
         response = urllib.request.urlopen(req)
         res = response.read()
@@ -80,7 +92,8 @@ def check_config():
 
 
 
-def notify_dding(group='default', content=''):
+# def notify_dding(group='default', content='',type='text'):
+def notify_dding(group='default', title='hello', content='', msgtype='markdown'):
     try:
         dic = check_config()
         token = dic[group]['token']
@@ -98,7 +111,7 @@ def notify_dding(group='default', content=''):
         hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
         sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
         url = '%s%s&timestamp=%s&sign=%s' % (accesstoken_url, token, timestamp, sign)
-        http_post(url, content)
+        http_post(url,msgtype,title, content)
     except Exception as e:
         traceback.print_exc()
         print(e)

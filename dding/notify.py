@@ -118,8 +118,6 @@ def notify_dding(group='default', title='', content='', msgtype='markdown'):
 def notify_dding_token_secret(token,secret,title='',content='',msgtype='markdown'):
     try:
         dic = check_config()
-        token = dic[group]['token']
-        secret = dic[group]['secret']
         accesstoken_url = 'https://oapi.dingtalk.com/robot/send?access_token='
         timestamp = int(round(time.time() * 1000))
         secret_enc = secret.encode()

@@ -9,6 +9,7 @@ import base64
 import six
 import six.moves.urllib as urllib
 import traceback
+import certifi
 
 home_path = os.path.expanduser('~')
 cache_path = os.path.join(home_path, '.dding')
@@ -38,7 +39,7 @@ def http_post(url, msgtype, title, content):
                 }
             }
         req = urllib.request.Request(url=url, headers=headers, data=json.dumps(data).encode())
-        response = urllib.request.urlopen(req)
+        response = urllib.request.urlopen(req,cafile=certifi.where())
         res = response.read()
         print(res.decode("utf8"))
     except Exception as e:

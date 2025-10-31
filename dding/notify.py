@@ -97,15 +97,31 @@ def check_config():
     else:
         lst = read_config()
     for item in lst:
-        dic[item['group']] = item
+        platform = item.get('platform', 'dding')  # 默认为钉钉
+        group = item['group']
+        
+        # 创建二级字典结构: dic[platform][group]
+        if platform not in dic:
+            dic[platform] = {}
+        dic[platform][group] = item
+    
     return dic
 
 def notify_feishu(group='default',title='', content='', msgtype='markdown'):
     try:
         dic = check_config()
-        token = dic[group]['token']
-        secret = dic[group]['secret']
+        
+        # 检查飞书配置是否存在
+        if 'feishu' not in dic or group not in dic['feishu']:
+            print(f"飞书配置未找到，group: {group}")
+            print("请检查配置文件中是否有正确的飞书配置")
+            return
+            
+        config = dic['feishu'][group]
+        token = config['token']
+        secret = config['secret']
         print("-" * 60)
+        print('platform:\tFeishu')
         print('group:\t%s' % (group))
         print('token:\t%s' % (token))
         print('secret:\t%s' % (secret))
@@ -136,8 +152,16 @@ def notify_feishu(group='default',title='', content='', msgtype='markdown'):
 def notify_dding(group='default', title='', content='', msgtype='markdown'):
     try:
         dic = check_config()
-        token = dic[group]['token']
-        secret = dic[group]['secret']
+        
+        # 检查钉钉配置是否存在
+        if 'dding' not in dic or group not in dic['dding']:
+            print(f"钉钉配置未找到，group: {group}")
+            print("请检查配置文件中是否有正确的钉钉配置")
+            return
+            
+        config = dic['dding'][group]
+        token = config['token']
+        secret = config['secret']
         print("-" * 60)
         print('group:\t%s' % (group))
         print('token:\t%s' % (token))

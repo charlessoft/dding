@@ -15,6 +15,15 @@ home_path = os.path.expanduser('~')
 cache_path = os.path.join(home_path, '.dding')
 file_name = cache_path + '/config.json'
 
+def http_post_data(url,data):
+    try:
+        headers = {'Content-Type': 'application/json'}
+        req = urllib.request.Request(url=url, headers=headers, data=json.dumps(data).encode())
+        response = urllib.request.urlopen(req,cafile=certifi.where())
+        res = response.read()
+        print(res.decode("utf8"))
+    except Exception as e:
+        print(e)
 
 def http_post(url, msgtype, title, content):
     """
@@ -91,6 +100,37 @@ def check_config():
         dic[item['group']] = item
     return dic
 
+def notify_feishu(group='default',title='', content='', msgtype='markdown'):
+    try:
+        dic = check_config()
+        token = dic[group]['token']
+        secret = dic[group]['secret']
+        print("-" * 60)
+        print('group:\t%s' % (group))
+        print('token:\t%s' % (token))
+        print('secret:\t%s' % (secret))
+        print("-" * 60)
+
+        # accesstoken_url = 'https://oapi.dingtalk.com/robot/send?access_token='
+        accesstolen_url= 'https://open.feishu.cn/open-apis/bot/v2/hook/'
+        timestamp=round(time.time())
+        string_to_sign = '{}\n{}'.format(timestamp, secret)
+        hmac_code = hmac.new(string_to_sign.encode("utf-8"), digestmod=hashlib.sha256).digest()
+        sign = base64.b64encode(hmac_code).decode('utf-8')
+        url = '%s%s' %(accesstolen_url,token)
+
+        data={
+                "timestamp": timestamp,
+                "sign": sign,
+                "msg_type": "text",
+                "content": {
+                        "text": "request example"
+                }
+        }
+        http_post_data(url,data)
+    except Exception as e:
+        traceback.print_exc()
+        print(e)
 
 # def notify_dding(group='default', content='',type='text'):
 def notify_dding(group='default', title='', content='', msgtype='markdown'):
@@ -132,3 +172,12 @@ def notify_dding_token_secret(token,secret,title='',content='',msgtype='markdown
         traceback.print_exc()
         print(e)
 
+def notify_feishu_token_secret(token,secret,title='',content='',msgtype='markdown'):
+    try:
+        dic = check_config()
+        accesstoken_url = 'https://open.feishu.cn/open-apis/bot/v2/hook/'
+        timestamp = int(round(time.time() * 1000))
+
+    except Exception as e:
+        traceback.print_exc()
+        print(e)

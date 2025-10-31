@@ -6,9 +6,9 @@ import setuptools
 
 setuptools.setup(
     name='dding',
-    version='0.1.5',
+    version='0.1.6',
     keywords='dding',
-    description='钉钉自定义机器人.',
+    description='通知机器人.',
     # version = dding.__version__,
     install_requires=[
         'six',

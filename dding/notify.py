@@ -6,6 +6,7 @@ import hmac
 import hashlib
 import codecs
 import base64
+import ssl
 import six
 import six.moves.urllib as urllib
 import traceback
@@ -31,6 +32,7 @@ def http_post_data(url,data):
         res = response.read()
         print(res.decode("utf8"))
     except Exception as e:
+        traceback.print_exc()
         print(e)
 
 def http_post(url, msgtype, title, content):
@@ -60,6 +62,7 @@ def http_post(url, msgtype, title, content):
         res = response.read()
         print(res.decode("utf8"))
     except Exception as e:
+        traceback.print_exc()
         print(e)
 
 

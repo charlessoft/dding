@@ -6,7 +6,7 @@ import setuptools
 
 setuptools.setup(
     name='dding',
-    version='0.1.7',
+    version='0.1.9',
     keywords='dding',
     description='通知机器人.',
     # version = dding.__version__,

@@ -17,9 +17,17 @@ file_name = cache_path + '/config.json'
 
 def http_post_data(url,data):
     try:
+        # headers = {'Content-Type': 'application/json'}
+        # req = urllib.request.Request(url=url, headers=headers, data=json.dumps(data).encode())
+        # response = urllib.request.urlopen(req,cafile=certifi.where())
+        # res = response.read()
+        # print(res.decode("utf8"))
+        
         headers = {'Content-Type': 'application/json'}
         req = urllib.request.Request(url=url, headers=headers, data=json.dumps(data).encode())
-        response = urllib.request.urlopen(req,cafile=certifi.where())
+        # 创建 SSL 上下文，指定 CA 证书
+        context = ssl.create_default_context(cafile=certifi.where())
+        response = urllib.request.urlopen(req, context=context)
         res = response.read()
         print(res.decode("utf8"))
     except Exception as e:

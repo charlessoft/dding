@@ -6,12 +6,13 @@ import setuptools
 
 setuptools.setup(
     name='dding',
-    version='0.1.9',
+    version='0.1.11',
     keywords='dding',
     description='通知机器人.',
     # version = dding.__version__,
     install_requires=[
         'six',
+        "certifi"
     ],
     entry_points={
         'console_scripts': [

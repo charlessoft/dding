@@ -194,7 +194,8 @@ def notify_dding(group='default', title='', content='', msgtype='markdown'):
 
 def notify_dding_token_secret(token,secret,title='',content='',msgtype='markdown'):
     try:
-        dic = check_config()
+        if not token or not secret:
+            raise ValueError("token or secret empty")
         accesstoken_url = 'https://oapi.dingtalk.com/robot/send?access_token='
         timestamp = int(round(time.time() * 1000))
         secret_enc = secret.encode()
@@ -210,7 +211,8 @@ def notify_dding_token_secret(token,secret,title='',content='',msgtype='markdown
 
 def notify_feishu_token_secret(token,secret,title='',content='',msgtype='markdown'):
     try:
-        dic = check_config()
+        if not token or not secret:
+            raise ValueError("token or secret empty")
         accesstoken_url = 'https://open.feishu.cn/open-apis/bot/v2/hook/'
         timestamp = int(round(time.time() * 1000))
 
